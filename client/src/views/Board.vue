@@ -1,10 +1,27 @@
 <template>
-  <div class="board">{{board.title}}</div>
+  <div class="board">
+    <h1>{{board.title}}</h1>
+    <h3>{{board.description}}</h3>
+    <form @submit.prevent="addList()">
+      <input type="text" placeholder="title" v-model="newList.title" required />
+      <button type="submit">Create List</button>
+    </form>
+    <div v-for="list in lists" :key="list._id"></div>
+  </div>
 </template>
 
 <script>
+import list from "../components/List";
 export default {
   name: "board",
+  props: ["boardId"],
+  data() {
+    return {
+      newList: {
+        title: ""
+      }
+    };
+  },
   computed: {
     board() {
       return (
@@ -13,8 +30,16 @@ export default {
           title: "Loading..."
         }
       );
+    },
+    lists() {
+      return this.$store.state.lists;
     }
   },
-  props: ["boardId"]
+  methods: {
+    addList() {
+      this.$store.dispatch("addList", this.newList);
+      this.newList = { title: "" };
+    }
+  }
 };
 </script>
