@@ -13,21 +13,28 @@ export default class TaskController {
     this.router = express.Router()
       .use(Authorize.authenticated)
 
-      .get('', this.getAll)
+      // .get('', this.getAll)
       .get('/:id/comments', this.getComments)
-      // .get('/:id', this.getById)
+      .get('/:id', this.getById)
       .post('', this.create)
       // .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
 
-  async getAll(req, res, next) {
-    try {
+  // async getAll(req, res, next) {
+  //   try {
 
-      let data = await _taskService.find({ listId: req.session.uid })
+  //     let data = await _taskService.find({ listId: req.session.uid })
+  //     return res.send(data)
+  //   }
+  //   catch (err) { next(err) }
+  // }
+
+  async getById(req, res, next) {
+    try {
+      let data = await _taskService.findOne({ _id: req.params.id, authorId: req.session.uid })
       return res.send(data)
-    }
-    catch (err) { next(err) }
+    } catch (error) { next(error) }
   }
 
   async getComments(req, res, next) {

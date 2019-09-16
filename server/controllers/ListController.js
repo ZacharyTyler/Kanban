@@ -9,21 +9,28 @@ export default class ListController {
   constructor() {
     this.router = express.Router()
       .use(Authorize.authenticated)
-      .get('', this.getAll)
-      // .get('/:id', this.getById)
+      // .get('', this.getAll)
+      .get('/:id', this.getById)
       .post('', this.create)
       // .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
 
-  async getAll(req, res, next) {
+  async getById(req, res, next) {
     try {
-
-      let data = await _listService.find({ boardId: req.session.uid })
+      let data = await _listService.findOne({ _id: req.params.id, authorId: req.session.uid })
       return res.send(data)
-    }
-    catch (err) { next(err) }
+    } catch (error) { next(error) }
   }
+
+  // async getAll(req, res, next) {
+  //   try {
+
+  //     let data = await _listService.find({ boardId: req.session.uid })
+  //     return res.send(data)
+  //   }
+  //   catch (err) { next(err) }
+  // }
 
   async create(req, res, next) {
     try {
