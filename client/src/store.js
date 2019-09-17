@@ -21,6 +21,7 @@ export default new Vuex.Store({
     boards: [],
     activeBoard: {},
     lists: [],
+    tasks: {}
 
 
   },
@@ -33,6 +34,10 @@ export default new Vuex.Store({
     },
     setLists(state, lists) {
       state.lists = lists
+    },
+    setTasks(state, payload) {
+      Vue.set(state.tasks, payload.listId, payload.tasks)
+
     }
   },
   actions: {
@@ -76,7 +81,6 @@ export default new Vuex.Store({
         })
     },
 
-
     addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
@@ -87,7 +91,7 @@ export default new Vuex.Store({
 
 
     //#region -- LISTS --
-    async getLists({ commit, }, boardId) {
+    async getLists({ commit }, boardId) {
       try {
         let res = await api.get("boards/" + boardId + "/lists")
         commit('setLists', res.data)
@@ -107,9 +111,42 @@ export default new Vuex.Store({
       }
     },
 
-
+    async removeList({ dispatch }, listData) {
+      try {
+        let res = await api.delete(`lists/${listData._id}`, listData)
+        dispatch('getLists', listData.boardId)
+      } catch (error) {
+        console.error(error)
+      }
+    },
 
 
     //#endregion
+
+    //#region -- TASKS --
+
+    async getTasks({ commit }, listId) {
+      try {
+
+        let res = await api.get("lists/" + listId + "/tasks")
+        commit('setTasks', { tasks: res.data, listId })
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async addTask({ dispatch }, taskData) {
+      try {
+
+        let res = await api.post('tasks', taskData)
+        dispatch('getTasks', taskData.listId)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+
+    //#endregion
+
   }
 })

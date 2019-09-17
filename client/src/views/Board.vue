@@ -1,12 +1,13 @@
 <template>
   <div class="board">
+    <button class="btn btn-dark" @click="logout()">Logout</button>
     <h1>{{board.title}}</h1>
     <h3>{{board.description}}</h3>
     <form @submit.prevent="addList()">
       <input type="text" placeholder="title" v-model="newList.title" required />
-      <button type="submit">Create List</button>
+      <button class="btn btn-light" type="submit">Create List</button>
     </form>
-    <div>
+    <div class="row">
       <Lists v-for="list in lists" :propList="list" :key="list._id" />
     </div>
   </div>
@@ -28,6 +29,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getLists", this.$route.params.boardId);
+    this.$store.dispatch("getBoards");
   },
   computed: {
     user() {
@@ -36,7 +38,9 @@ export default {
     board() {
       return (
         //FIXME This does not work on page reload because the boards array is empty in the store
-        this.$store.state.boards.find(b => b._id == this.boardId) || {
+        this.$store.state.boards.find(
+          b => b._id == this.$route.params.boardId
+        ) || {
           title: "Loading..."
         }
       );
@@ -49,7 +53,9 @@ export default {
   methods: {
     addList() {
       this.$store.dispatch("addList", this.newList);
-      this.newList = { title: "" };
+    },
+    logout() {
+      this.$store.dispatch("logout");
     }
   },
   components: {

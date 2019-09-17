@@ -3,7 +3,7 @@ let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
 
 let _schema = new Schema({
-  title: { type: String, required: true },
+  // title: { type: String, required: true },
   description: { type: String, required: true },
   listId: { type: ObjectId, ref: 'List', required: true },
   authorId: { type: ObjectId, ref: 'User', required: true },

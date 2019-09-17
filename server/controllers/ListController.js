@@ -1,9 +1,11 @@
 import express from 'express'
 import { Authorize } from '../middleware/authorize.js'
 import ListService from '../services/ListService'
+import TaskService from '../services/TaskService.js'
 
 
 let _listService = new ListService().repository
+let _taskService = new TaskService().repository
 
 
 
@@ -13,6 +15,7 @@ export default class ListController {
       .use(Authorize.authenticated)
       .get('', this.getAll)
       .get('/:id', this.getById)
+      .get('/:id/tasks', this.getTasksByUserId)
       .post('', this.create)
       // .put('/:id', this.edit)
       .delete('/:id', this.delete)
@@ -33,6 +36,15 @@ export default class ListController {
     }
     catch (err) { next(err) }
   }
+
+  async getTasksByUserId(req, res, next) {
+    try {
+      let tasks = await _taskService.find({ listId: req.params.id })
+      res.send(tasks)
+    } catch (error) { next(error) }
+  }
+
+
 
   async create(req, res, next) {
     try {
