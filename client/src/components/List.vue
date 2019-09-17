@@ -6,7 +6,8 @@
 export default {
   name: "List",
   props: ["propList"],
-  computed: {}
+  computed: {},
+  methods: {}
 };
 </script>
 

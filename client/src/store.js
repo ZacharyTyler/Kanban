@@ -75,6 +75,8 @@ export default new Vuex.Store({
           commit('setBoards', res.data)
         })
     },
+
+
     addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
@@ -85,18 +87,27 @@ export default new Vuex.Store({
 
 
     //#region -- LISTS --
-    getLists({ commit, dispatch }) {
-      api.get('lists')
-        .then(res => {
-          commit('setLists', res.data)
-        })
+    async getLists({ commit, }, boardId) {
+      try {
+        let res = await api.get("boards/" + boardId + "/lists")
+        commit('setLists', res.data)
+      } catch (error) {
+        console.error(error)
+      }
     },
-    addList({ commit, dispatch }, listData) {
-      api.post('lists', listData)
-        .then(serverList => {
-          dispatch('getLists')
-        })
+
+
+    async addList({ dispatch }, listData) {
+      try {
+        let res = await api.post('lists', listData)
+        dispatch('getLists', listData.boardId)
+
+      } catch (error) {
+        console.error(error)
+      }
     },
+
+
 
 
     //#endregion

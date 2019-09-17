@@ -6,23 +6,33 @@
       <input type="text" placeholder="title" v-model="newList.title" required />
       <button type="submit">Create List</button>
     </form>
-    <div v-for="list in lists" :key="list._id"></div>
+    <div>
+      <Lists v-for="list in lists" :propList="list" :key="list._id" />
+    </div>
   </div>
 </template>
 
 <script>
-import list from "../components/List";
+import Lists from "../components/List";
 export default {
   name: "board",
   props: ["boardId"],
+
   data() {
     return {
       newList: {
-        title: ""
+        title: "",
+        boardId: this.$route.params.boardId
       }
     };
   },
+  mounted() {
+    this.$store.dispatch("getLists", this.$route.params.boardId);
+  },
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
     board() {
       return (
         //FIXME This does not work on page reload because the boards array is empty in the store
@@ -35,11 +45,15 @@ export default {
       return this.$store.state.lists;
     }
   },
+
   methods: {
     addList() {
       this.$store.dispatch("addList", this.newList);
       this.newList = { title: "" };
     }
+  },
+  components: {
+    Lists
   }
 };
 </script>
