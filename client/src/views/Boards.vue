@@ -9,6 +9,7 @@
     </form>
     <div v-for="board in boards" :key="board._id">
       <router-link :to="{name: 'board', params: {boardId: board._id}}">{{board.title}}</router-link>
+      <button class="btn btn-dark" @click="removeBoard(board)">Delete</button>
     </div>
   </div>
 </template>
@@ -39,6 +40,9 @@ export default {
     },
     logout() {
       this.$store.dispatch("logout");
+    },
+    removeBoard(board) {
+      this.$store.dispatch("removeBoard", board._id);
     }
   }
 };

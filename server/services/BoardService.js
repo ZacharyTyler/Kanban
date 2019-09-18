@@ -1,12 +1,14 @@
 import mongoose from "mongoose"
 import ListService from './ListService'
 import TaskService from "./TaskService"
+import CommentService from "./CommentService"
 
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
 let _listRepo = new ListService().repository
 let _taskRepo = new TaskService().repository
+let _commentRepo = new CommentService().repository
 
 let _schema = new Schema({
   title: { type: String, required: true },
@@ -20,6 +22,7 @@ _schema.pre('findOneAndRemove', function (next) {
   Promise.all([
     _listRepo.deleteMany({ boardId: this._conditions._id }),
     _taskRepo.deleteMany({ boardId: this._conditions._id }),
+    _commentRepo.deleteMany({ boardId: this._conditions._id })
 
   ])
     .then(() => next())

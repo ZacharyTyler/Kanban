@@ -11,6 +11,23 @@
       <button class="btn btn-outline-dark" @submit="moveTask(list._id)">Moved: {{selected}}</button>
     </span>-->
 
+    <div class="dropdown">
+      <button
+        class="btn btn-outline-dark dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+      >Move Task</button>
+      <div class="dropdown-menu">
+        <div
+          class="dropdown-item"
+          v-for="list in lists"
+          :key="list._id"
+          @click="moveTask(list._id)"
+        >{{list.title}}</div>
+      </div>
+    </div>
+
     <hr />
     <Comments v-for="comment in comments" :propComment="comment" :key="comment._id" />
     <form @submit.prevent="addComment()">
@@ -30,7 +47,8 @@ export default {
   data() {
     return {
       newComment: {
-        taskId: this.propTask._id
+        taskId: this.propTask._id,
+        boardId: this.$route.params.boardId
       }
     };
   },
@@ -51,8 +69,8 @@ export default {
     },
     moveTask(listId) {
       let payload = {
-        oldId: this.task.listId,
-        newId: listId,
+        oldId: this.propTask.listId,
+        listId: listId,
         taskId: this.propTask._id
       };
       this.$store.dispatch("moveTask", payload);

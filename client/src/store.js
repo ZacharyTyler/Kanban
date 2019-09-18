@@ -93,6 +93,15 @@ export default new Vuex.Store({
           dispatch('getBoards')
         })
     },
+    async removeBoard({ dispatch }, boardId) {
+
+      try {
+        let res = await api.delete(`boards/${boardId}`, boardId)
+        dispatch('getBoards')
+      } catch (error) {
+        console.error(error)
+      }
+    },
     //#endregion
 
 
@@ -161,10 +170,11 @@ export default new Vuex.Store({
       }
     },
     async moveTask({ dispatch }, payload) {
+      debugger
       try {
-        let res = await api.put(`tasks/${payload.taskId}`, payload.newId)
+        let res = await api.put(`tasks/${payload.taskId}`, payload)
         dispatch('getTasks', payload.oldId)
-        dispatch('getTasks', payload.newId)
+        dispatch('getTasks', payload.listId)
       } catch (error) {
         console.error(error)
       }
