@@ -17,7 +17,7 @@ export default class TaskController {
       .get('/:id/comments', this.getComments)
       .get('/:id', this.getById)
       .post('', this.create)
-      // .put('/:id', this.edit)
+      .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
 
@@ -47,6 +47,30 @@ export default class TaskController {
     }
     catch (err) { next(err) }
   }
+
+  async edit(req, res, next) {
+    try {
+      req.body.authorId = req.session.uid
+      let data = await _taskService.findOneAndUpdate({ _id: req.params.id, authorId: req.session.uid }, req.body, { new: true })
+      if (data) {
+        return res.send(data)
+      }
+      throw new Error("invalid id")
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  // async edit(req, res, next) {
+  //   try {
+  //     let data = await _boardService.findOneAndUpdate({ _id: req.params.id, authorId: req.session.uid }, req.body, { new: true })
+  //     if (data) {
+  //       return res.send(data)
+  //     }
+  //     throw new Error("invalid id")
+  //   } catch (error) { next(error) }
+  // }
+
 
   async create(req, res, next) {
     try {
