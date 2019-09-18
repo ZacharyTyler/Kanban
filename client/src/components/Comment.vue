@@ -1,7 +1,7 @@
 <template>
   <div class="comment">
-    <h3>{{propcomment.content}}</h3>
-    <button class="btn btn-dark" @click="removeComment()">Delete Comment</button>
+    <h3>{{propComment.content}}</h3>
+    <button class="btn btn-dark" @click="removeComment()">X</button>
   </div>
 </template>
 
@@ -14,7 +14,11 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    removeComment() {
+      this.$store.dispatch("removeComment", this.propComment);
+    }
+  },
   components: {}
 };
 </script>
