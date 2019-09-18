@@ -36,7 +36,7 @@ export default class CommentController {
 
   async delete(req, res, next) {
     try {
-      await _commentService.findOneAndRemove({ _id: req.params.id, taskId: req.session.uid })
+      await _commentService.findOneAndRemove({ _id: req.params.id, authorId: req.session.uid })
       return res.send("Successfully deleted comment")
     } catch (error) { next(error) }
   }
