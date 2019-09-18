@@ -37,7 +37,6 @@ export default new Vuex.Store({
     },
     setTasks(state, payload) {
       Vue.set(state.tasks, payload.listId, payload.tasks)
-
     }
   },
   actions: {
@@ -143,10 +142,39 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error)
       }
+    },
+
+    async removeTask({ dispatch }, taskData) {
+      try {
+        let res = await api.delete(`tasks/${taskData._id}`, taskData)
+        dispatch('getTasks', taskData.listId)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    //#endregion
+
+    //#region -- Comments --
+    async getComments({ commit }, taskId) {
+      try {
+        let res = await api.get(`tasks/` + taskId + `/comments`)
+        commit('setComments', { comments: res.data, taskId })
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async addComment({ dispatch }, commentData) {
+      try {
+        let res = await api.post('comments', commentData)
+        dispatch('getComments', commentData.taskId)
+      } catch (error) {
+        console.error(error)
+      }
     }
 
 
     //#endregion
-
   }
 })
