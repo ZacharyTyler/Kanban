@@ -11,20 +11,20 @@ export default class CommentController {
     this.router = express.Router()
       .use(Authorize.authenticated)
 
-      // .get('', this.getAll)
+      .get('', this.getAll)
       // .get('/:id', this.getById)
       .post('', this.create)
       // .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
 
-  // async getAll(req, res, next) {
-  //   try {
-  //     let data = await _commentService.find({})
-  //     return res.send(data)
-  //   }
-  //   catch (err) { next(err) }
-  // }
+  async getAll(req, res, next) {
+    try {
+      let data = await _commentService.find({})
+      return res.send(data)
+    }
+    catch (err) { next(err) }
+  }
 
   async create(req, res, next) {
     try {
@@ -36,8 +36,10 @@ export default class CommentController {
 
   async delete(req, res, next) {
     try {
-      await _commentService.findOneAndRemove({ _id: req.params.id, authorId: req.session.uid })
-      return res.send("Successfully deleted comment")
+      let data = await _commentService.findOneAndRemove({ _id: req.params.id, authorId: req.session.uid })
+      if (!data) {
+        throw new Error("invalid id, you didn't say the magic word")
+      } res.send("Successfully deleted comment")
     } catch (error) { next(error) }
   }
 }

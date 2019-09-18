@@ -129,6 +129,7 @@ export default new Vuex.Store({
 
     //#endregion
 
+
     //#region -- TASKS --
 
     async getTasks({ commit }, listId) {
@@ -181,6 +182,7 @@ export default new Vuex.Store({
       }
     },
     async removeComment({ dispatch }, commentData) {
+
       try {
         let res = await api.delete(`comments/${commentData._id}`, commentData)
         dispatch('getComments', commentData.taskId)

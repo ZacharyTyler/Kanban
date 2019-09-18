@@ -5,7 +5,7 @@ let ObjectId = Schema.Types.ObjectId
 let _schema = new Schema({
   content: { type: String, required: true },
   taskId: { type: ObjectId, ref: 'Task', required: true },
-
+  authorId: { type: ObjectId, ref: 'User', required: true }
 }, { timestamps: true })
 
 export default class CommentService {
