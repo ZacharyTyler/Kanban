@@ -160,6 +160,15 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
+    async moveTask({ dispatch }, payload) {
+      try {
+        let res = await api.put(`tasks/${payload.taskId}`, payload.newId)
+        dispatch('getTasks', payload.oldId)
+        dispatch('getTasks', payload.newId)
+      } catch (error) {
+        console.error(error)
+      }
+    },
 
     //#endregion
 

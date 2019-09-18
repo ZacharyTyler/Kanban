@@ -2,6 +2,15 @@
   <div class="task">
     <h3>{{propTask.description}}</h3>
     <button class="btn btn-dark" @click="removeTask()">Delete Task</button>
+
+    <!-- <select v-model="selected">
+      <option disabled value>Select a Task</option>
+      <option v-for="list in lists" :key="list._id">{{list.title}}</option>
+    </select>
+    <span>
+      <button class="btn btn-outline-dark" @submit="moveTask(list._id)">Moved: {{selected}}</button>
+    </span>-->
+
     <hr />
     <Comments v-for="comment in comments" :propComment="comment" :key="comment._id" />
     <form @submit.prevent="addComment()">
@@ -31,11 +40,22 @@ export default {
   computed: {
     comments() {
       return this.$store.state.comments[this.propTask._id];
+    },
+    lists() {
+      return this.$store.state.lists;
     }
   },
   methods: {
     removeTask() {
       this.$store.dispatch("removeTask", this.propTask);
+    },
+    moveTask(listId) {
+      let payload = {
+        oldId: this.task.listId,
+        newId: listId,
+        taskId: this.propTask._id
+      };
+      this.$store.dispatch("moveTask", payload);
     },
     //Comments Section
     addComment() {
