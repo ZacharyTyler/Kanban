@@ -48,7 +48,8 @@ export default {
     return {
       newComment: {
         taskId: this.propTask._id,
-        boardId: this.$route.params.boardId
+        boardId: this.$route.params.boardId,
+        listId: this.propTask.listId
       }
     };
   },
