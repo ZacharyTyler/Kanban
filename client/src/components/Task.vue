@@ -1,39 +1,54 @@
 <template>
   <div class="task">
-    <h3>{{propTask.description}}</h3>
-    <button class="btn btn-dark" @click="removeTask()">Delete Task</button>
+    <div class="row-flex">
+      <div class="col card bg-dark">
+        <div class="row-flex">
+          <div class="col">
+            <button
+              class="btn btn-sm btn-outline-light btn-dark float-right"
+              @click="removeTask()"
+            >X</button>
+            <div class="dropdown float-left">
+              <button
+                class="btn btn-sm btn-outline-light btn-dark dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+              ></button>
+              <div class="dropdown-menu">
+                <div
+                  class="dropdown-item"
+                  v-for="list in lists"
+                  :key="list._id"
+                  @click="moveTask(list._id)"
+                >{{list.title}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <h3>{{propTask.description}}</h3>
+          </div>
+        </div>
+        <Comments v-for="comment in comments" :propComment="comment" :key="comment._id" />
 
-    <!-- <select v-model="selected">
-      <option disabled value>Select a Task</option>
-      <option v-for="list in lists" :key="list._id">{{list.title}}</option>
-    </select>
-    <span>
-      <button class="btn btn-outline-dark" @submit="moveTask(list._id)">Moved: {{selected}}</button>
-    </span>-->
-
-    <div class="dropdown">
-      <button
-        class="btn btn-outline-dark dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-      >Move Task</button>
-      <div class="dropdown-menu">
-        <div
-          class="dropdown-item"
-          v-for="list in lists"
-          :key="list._id"
-          @click="moveTask(list._id)"
-        >{{list.title}}</div>
+        <form class="justify-content-center d-flex" @submit.prevent="addComment()">
+          <div class="input-group mb-3 mt-3 input-size">
+            <input
+              type="text"
+              placeholder="Comment"
+              class="form-control text-center"
+              v-model="newComment.content"
+              required
+            />
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-outline-light btn-dark" type="submit">Create</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-
-    <hr />
-    <Comments v-for="comment in comments" :propComment="comment" :key="comment._id" />
-    <form @submit.prevent="addComment()">
-      <input type="text" placeholder="comment" v-model="newComment.content" required />
-      <button class="btn btn-light" type="submit">Create Comment</button>
-    </form>
   </div>
 </template>
 

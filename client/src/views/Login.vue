@@ -1,19 +1,24 @@
 <template>
   <div class="login">
-    <form v-if="loginForm" @submit.prevent="loginUser">
-      <input type="email" v-model="creds.email" placeholder="email" />
-      <input type="password" v-model="creds.password" placeholder="password" />
-      <button class="btn btn-dark btn-outline-light" type="submit">Login</button>
-    </form>
-    <form v-else @submit.prevent="register">
-      <input type="text" v-model="newUser.name" placeholder="name" />
-      <input type="email" v-model="newUser.email" placeholder="email" />
-      <input type="password" v-model="newUser.password" placeholder="password" />
-      <button class="btn btn-outline-dark" type="submit">Create Account</button>
-    </form>
-    <div class="action" @click="loginForm = !loginForm">
-      <p v-if="loginForm">No account? Click here to Register</p>
-      <p v-else>Already have an account? Click here to Login</p>
+    <div class="container-fluid">
+      <div class="row">
+        <h1 class="page-title pb-5">Kanban Board</h1>
+        <form v-if="loginForm" @submit.prevent="loginUser">
+          <input type="email" v-model="creds.email" placeholder="email" />
+          <input type="password" v-model="creds.password" placeholder="password" />
+          <button class="btn btn-dark btn-outline-light" type="submit">Login</button>
+        </form>
+        <form v-else @submit.prevent="register">
+          <input type="text" v-model="newUser.name" placeholder="name" />
+          <input type="email" v-model="newUser.email" placeholder="email" />
+          <input type="password" v-model="newUser.password" placeholder="password" />
+          <button class="btn btn-outline-dark" type="submit">Create Account</button>
+        </form>
+        <div class="action" @click="loginForm = !loginForm">
+          <p v-if="loginForm">No account? Click here to Register</p>
+          <p v-else>Already have an account? Click here to Login</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>

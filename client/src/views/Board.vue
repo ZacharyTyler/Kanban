@@ -1,12 +1,38 @@
 <template>
-  <div class="board">
-    <button class="btn btn-dark" @click="logout()">Logout</button>
-    <h1>{{board.title}}</h1>
-    <h3>{{board.description}}</h3>
-    <form @submit.prevent="addList()">
-      <input type="text" placeholder="title" v-model="newList.title" required />
-      <button class="btn btn-light" type="submit">Create List</button>
-    </form>
+  <div class="board container">
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-dark float-right mb-3 cuz-rounded" @click="logout()">Logout</button>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-8 card bg-dark text-white justify-content-center d-flex kanban-board">
+        <h1 class="card-header">{{board.title}}</h1>
+        <h3 class="card-body margin-des">
+          <i>{{board.description}}</i>
+        </h3>
+        <form class="card-footer justify-content-center d-flex" @submit.prevent="addList()">
+          <div class="input-group mb-3 mt-3 input-size">
+            <input
+              type="text"
+              class="form-control text-center"
+              placeholder="List"
+              v-model="newList.title"
+              required
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-sm btn-outline-light btn-dark"
+                id="button-addon2"
+                type="submit"
+              >Create</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Lists -->
     <div class="row">
       <Lists v-for="list in lists" :propList="list" :key="list._id" />
     </div>
@@ -63,3 +89,15 @@ export default {
   }
 };
 </script>
+
+<style>
+.cuz-rounded {
+  border-radius: 10px;
+}
+.input-size {
+  width: 60%;
+}
+.margin-des {
+  margin-bottom: -2px;
+}
+</style>

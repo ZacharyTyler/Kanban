@@ -1,7 +1,19 @@
 <template>
   <div class="comment">
-    <h3>{{propComment.content}}</h3>
-    <button class="btn btn-dark" @click="removeComment()">X</button>
+    <div class="row mt-2 mb-2">
+      <div class="col-9 float-left">
+        <h6>{{propComment.content}}</h6>
+      </div>
+      <div class="col-3 d-flex align-self-center">
+        <div class="col">
+          <button
+            class="btn btn-sm btn-outline-light btn-dark float-right d-flex mb-2"
+            @click="removeComment()"
+          >X</button>
+          <hr />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

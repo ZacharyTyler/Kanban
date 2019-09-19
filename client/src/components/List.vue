@@ -1,14 +1,48 @@
 <template>
-  <div class="list border col-4 m-2 p-2">
-    <h1>{{propList.title}}</h1>
-    <div class="row">
-      <Tasks v-for="task in tasks" :propTask="task" :key="task._id" />
+  <div class="list col-4 mt-4 p-2">
+    <div class="card bg-dark text-white mr-1 ml-1 kanban-board">
+      <div class="row-flex">
+        <div class="card-header col">
+          <div class="row-flex">
+            <button
+              class="btn btn-sm btn-outline-light btn-dark float-right"
+              @click="removeList()"
+            >X</button>
+          </div>
+          <br />
+          <div class="row-flex">
+            <div class="col d-flex justify-content-center">
+              <h1>{{propList.title}}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="card-body">
+          <Tasks v-for="task in tasks" :propTask="task" :key="task._id" />
+        </div>
+      </div>
+      <div class="card-footer">
+        <form class="justify-content-center d-flex" @submit.prevent="addTask()">
+          <div class="input-group mb-3 mt-3 input-size">
+            <input
+              type="text"
+              class="form-control text-center"
+              placeholder="Task"
+              v-model="newTask.description"
+              required
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-sm btn-outline-light btn-dark"
+                id="button-addon2"
+                type="submit"
+              >Create</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    <form @submit.prevent="addTask()">
-      <input type="text" placeholder="title" v-model="newTask.description" required />
-      <button class="btn btn-light" type="submit">Create Task</button>
-    </form>
-    <button class="btn btn-dark" @click="removeList()">Delete</button>
   </div>
 </template>
 
@@ -49,4 +83,8 @@ export default {
 </script>
 
 <style scoped>
+.neg-margins {
+  margin-left: -5px;
+  margin-right: -5px;
+}
 </style>
