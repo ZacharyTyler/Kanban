@@ -1,5 +1,5 @@
 <template>
-  <div class="boards container rounded opacity">
+  <div class="boards container rounded">
     <hr />
     <div class="row">
       <div class="col">
