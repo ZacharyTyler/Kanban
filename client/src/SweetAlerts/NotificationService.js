@@ -2,6 +2,17 @@ import Swal from "sweetalert2"
 
 
 export default class NotificationService {
+  static toastAdded(text = "", title = "Item Created", timer = 5500) {
+    Swal.fire({
+      title,
+      text,
+      type: "success",
+      timer,
+      showConfirmButton: false,
+      position: "top-right",
+      toast: true
+    });
+  }
 
   static toast(text = "", title = "Logged Out", timer = 5500) {
     Swal.fire({

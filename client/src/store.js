@@ -65,6 +65,7 @@ export default new Vuex.Store({
         let user = await AuthService.Login(creds)
         commit('setUser', user)
         router.push({ name: "boards" })
+        NotificationService.toast()
       } catch (e) {
         console.warn(e.message)
       }
@@ -95,6 +96,7 @@ export default new Vuex.Store({
       api.post('boards', boardData)
         .then(serverBoard => {
           dispatch('getBoards')
+          NotificationService.toastAdded()
         })
     },
     async removeBoard({ dispatch }, boardId) {
@@ -119,6 +121,7 @@ export default new Vuex.Store({
         commit('setLists', res.data)
       } catch (error) {
         console.error(error)
+
       }
     },
 
@@ -127,9 +130,10 @@ export default new Vuex.Store({
       try {
         let res = await api.post('lists', listData)
         dispatch('getLists', listData.boardId)
-
+        NotificationService.toastAdded()
       } catch (error) {
         console.error(error)
+        NotificationService.toastError(error)
       }
     },
 
@@ -160,11 +164,12 @@ export default new Vuex.Store({
 
     async addTask({ dispatch }, taskData) {
       try {
-
         let res = await api.post('tasks', taskData)
         dispatch('getTasks', taskData.listId)
+        NotificationService.toastAdded()
       } catch (error) {
         console.error(error)
+        NotificationService.toastError(error)
       }
     },
 
@@ -181,8 +186,10 @@ export default new Vuex.Store({
         let res = await api.put(`tasks/${payload.data.taskId}`, payload)
         dispatch('getTasks', payload.data.oldId)
         dispatch('getTasks', payload.listId)
+        NotificationService.toastAdded()
       } catch (error) {
         console.error(error)
+        NotificationService.toastError(error)
       }
     },
 
@@ -202,12 +209,13 @@ export default new Vuex.Store({
       try {
         let res = await api.post('comments', commentData)
         dispatch('getComments', commentData.taskId)
+        NotificationService.toastAdded()
       } catch (error) {
         console.error(error)
+        NotificationService.toastError(error)
       }
     },
     async removeComment({ dispatch }, commentData) {
-
       try {
         let res = await api.delete(`comments/${commentData._id}`, commentData)
         dispatch('getComments', commentData.taskId)
