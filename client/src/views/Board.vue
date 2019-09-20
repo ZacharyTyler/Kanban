@@ -2,7 +2,7 @@
   <div class="board container">
     <div class="row">
       <div class="col">
-        <button class="btn btn-dark float-right mb-3 cuz-rounded" @click="logout()">Logout</button>
+        <button class="btn btn-dark float-right mb-3 cuz-rounded" @click="logout('success')">Logout</button>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -41,6 +41,8 @@
 
 <script>
 import Lists from "../components/List";
+import swal from "sweetalert";
+
 export default {
   name: "board",
   props: ["boardId"],
@@ -63,7 +65,6 @@ export default {
     },
     board() {
       return (
-        //FIXME This does not work on page reload because the boards array is empty in the store
         this.$store.state.boards.find(
           b => b._id == this.$route.params.boardId
         ) || {
@@ -80,8 +81,8 @@ export default {
     addList() {
       this.$store.dispatch("addList", this.newList);
     },
-    logout() {
-      this.$store.dispatch("logout");
+    logout(type) {
+      this.$store.dispatch("logout", { error: true });
     }
   },
   components: {

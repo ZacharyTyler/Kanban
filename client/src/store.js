@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
+import NotificationService from "./SweetAlerts/NotificationService"
 import AuthService from './AuthService'
 
 Vue.use(Vuex)
@@ -73,7 +74,7 @@ export default new Vuex.Store({
         commit('resetState')
         router.push({ name: "login" })
       } catch (e) {
-        console.warn(e.message)
+        NotificationService.toastError(e)
       }
     },
     //#endregion
