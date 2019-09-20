@@ -31,7 +31,7 @@ export default class NotificationService {
   }
 
   static delete() {
-    Swal.fire({
+    swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       type: 'warning',
@@ -41,7 +41,7 @@ export default class NotificationService {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        Swal.fire(
+        swal.fire(
           'Deleted!',
           'Your file has been deleted.',
           'success'

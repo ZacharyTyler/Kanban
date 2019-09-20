@@ -5,6 +5,8 @@ import router from './router'
 import NotificationService from "./SweetAlerts/NotificationService"
 import AuthService from './AuthService'
 
+
+
 Vue.use(Vuex)
 
 //Allows axios to work locally or live
@@ -73,6 +75,7 @@ export default new Vuex.Store({
         if (!success) { }
         commit('resetState')
         router.push({ name: "login" })
+        NotificationService.toast()
       } catch (e) {
         NotificationService.toastError(e)
       }

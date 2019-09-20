@@ -2,7 +2,7 @@
   <div class="board container">
     <div class="row">
       <div class="col">
-        <button class="btn btn-dark float-right mb-3 cuz-rounded" @click="logout('success')"  >Logout</button>
+        <button class="btn btn-dark float-right mb-3 cuz-rounded" @click="logout('success')">Logout</button>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -41,7 +41,7 @@
 
 <script>
 import Lists from "../components/List";
-import NotificationService from "./SweetAlerts/NotificationService"
+import NotificationService from "../SweetAlerts/NotificationService";
 import swal from "sweetalert2";
 
 export default {
@@ -82,9 +82,8 @@ export default {
     addList() {
       this.$store.dispatch("addList", this.newList);
     },
-    logout(type) {
-      this.NotificationService.toast()
-      this.$store.dispatch("logout", { error: true });
+    logout() {
+      this.$store.dispatch("logout");
     }
   },
   components: {
