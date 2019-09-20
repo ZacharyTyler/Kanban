@@ -1,5 +1,5 @@
 <template>
-  <div class="list col-4 mt-4 p-2">
+  <Drop class="list col-4 mt-4 p-2" @drop="moveTask">
     <div class="card bg-dark text-white mr-1 ml-1 kanban-board">
       <div class="row-flex">
         <div class="card-header col">
@@ -43,11 +43,13 @@
         </form>
       </div>
     </div>
-  </div>
+  </Drop>
 </template>
 
 <script>
+import Vue from "vue";
 import Tasks from "../components/Task";
+import { Drag, Drop } from "vue-drag-drop";
 export default {
   name: "list",
   props: ["propList"],
@@ -74,10 +76,18 @@ export default {
     },
     removeList() {
       this.$store.dispatch("removeList", this.propList);
+    },
+    moveTask(data) {
+      this.$store.dispatch("moveTask", {
+        data: data,
+        listId: this.propList._id
+      });
     }
   },
   components: {
-    Tasks
+    Tasks,
+    Drag,
+    Drop
   }
 };
 </script>
