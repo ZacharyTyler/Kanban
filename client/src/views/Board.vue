@@ -91,6 +91,9 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "Merienda One", cursive;
+}
 .cuz-rounded {
   border-radius: 10px;
 }
