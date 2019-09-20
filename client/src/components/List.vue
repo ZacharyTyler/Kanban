@@ -22,9 +22,9 @@
           <Tasks v-for="task in tasks" :propTask="task" :key="task._id" />
         </div>
       </div>
-      <div class="card-footer">
+      <div>
         <form class="justify-content-center d-flex" @submit.prevent="addTask()">
-          <div class="input-group mb-3 mt-3 input-size">
+          <div class="input-group mb-4 input-size">
             <input
               type="text"
               class="form-control text-center"

@@ -1,7 +1,7 @@
 <template>
   <div class="task">
     <div class="row-flex">
-      <div class="col card bg-dark">
+      <div class="col bg-dark">
         <div class="row-flex">
           <div class="col">
             <button
@@ -31,7 +31,9 @@
             <h3>{{propTask.description}}</h3>
           </div>
         </div>
+        <hr />
         <Comments v-for="comment in comments" :propComment="comment" :key="comment._id" />
+        <hr />
 
         <form class="justify-content-center d-flex" @submit.prevent="addComment()">
           <div class="input-group mb-3 mt-3 input-size">
@@ -47,6 +49,7 @@
             </div>
           </div>
         </form>
+        <hr />
       </div>
     </div>
   </div>

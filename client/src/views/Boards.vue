@@ -113,7 +113,7 @@ a:hover {
   left: 5%;
 }
 .opacity {
-  opacity: 1;
+  opacity: 0.9;
   /* filter: alpha(opacity=50); */
 }
 .white {
@@ -127,4 +127,8 @@ a:hover {
 .cuz-rounded {
   border-radius: 10px;
 }
+* {
+  cursor: url(http://www.rw-designer.com/cursor-extern.php?id=114588), default;
+}
 </style>
+

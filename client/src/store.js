@@ -170,7 +170,7 @@ export default new Vuex.Store({
       }
     },
     async moveTask({ dispatch }, payload) {
-      debugger
+
       try {
         let res = await api.put(`tasks/${payload.taskId}`, payload)
         dispatch('getTasks', payload.oldId)
