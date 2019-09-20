@@ -1,5 +1,8 @@
 <template>
-  <div class="task">
+  <Drag class="task" :transferData="{
+oldId: propTask.listId,
+        taskId: propTask._id
+  }">
     <div class="row-flex">
       <div class="col bg-dark">
         <div class="row-flex">
@@ -8,21 +11,8 @@
               class="btn btn-sm btn-outline-light btn-dark float-right"
               @click="removeTask()"
             >X</button>
-            <div class="dropdown float-left">
-              <button
-                class="btn btn-sm btn-outline-light btn-dark dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-              ></button>
-              <div class="dropdown-menu">
-                <div
-                  class="dropdown-item"
-                  v-for="list in lists"
-                  :key="list._id"
-                  @click="moveTask(list._id)"
-                >{{list.title}}</div>
-              </div>
+            <div class="float-left">
+              <!-- move icon goes here -->
             </div>
           </div>
         </div>
@@ -34,7 +24,6 @@
         <hr />
         <Comments v-for="comment in comments" :propComment="comment" :key="comment._id" />
         <hr />
-
         <form class="justify-content-center d-flex" @submit.prevent="addComment()">
           <div class="input-group mb-3 mt-3 input-size">
             <input
@@ -52,13 +41,14 @@
         <hr />
       </div>
     </div>
-  </div>
+  </Drag>
 </template>
 
 
 <script>
+import Vue from "vue";
 import Comments from "./Comment";
-
+import { Drag, Drop } from "vue-drag-drop";
 export default {
   name: "task",
   props: ["propTask"],
@@ -86,20 +76,17 @@ export default {
     removeTask() {
       this.$store.dispatch("removeTask", this.propTask);
     },
-    moveTask(listId) {
-      let payload = {
-        oldId: this.propTask.listId,
-        listId: listId,
-        taskId: this.propTask._id
-      };
-      this.$store.dispatch("moveTask", payload);
-    },
+
     //Comments Section
     addComment() {
       this.$store.dispatch("addComment", this.newComment);
     }
   },
-  components: { Comments }
+  components: {
+    Comments,
+    Drag,
+    Drop
+  }
 };
 </script>
 
