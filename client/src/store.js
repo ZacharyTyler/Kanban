@@ -208,8 +208,12 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error)
       }
-    }
+    },
 
+
+    //#endregion
+
+    //#region -- Toasts --
 
     //#endregion
   }
