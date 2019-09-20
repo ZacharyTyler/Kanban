@@ -3,7 +3,7 @@
     <hr />
     <div class="row">
       <div class="col">
-        <button class="btn btn-dark float-right mb-3 cuz-rounded" @click="logout()">Logout</button>
+        <button class="btn btn-dark float-right mb-3 cuz-rounded" @click="logout('success')">Logout</button>
       </div>
     </div>
     <h1 class="pb-5 card-header">
@@ -92,7 +92,7 @@ export default {
       this.$store.dispatch("logout");
     },
     removeBoard(board) {
-      this.$store.dispatch("removeBoard", board._id);
+      this.$store.dispatch("removeBoard", board._id,);
     }
   }
 };

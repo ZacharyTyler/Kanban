@@ -42,7 +42,7 @@
 <script>
 import Lists from "../components/List";
 import NotificationService from "../SweetAlerts/NotificationService";
-import swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 export default {
   name: "board",

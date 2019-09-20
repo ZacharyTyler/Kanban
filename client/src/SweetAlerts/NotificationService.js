@@ -1,9 +1,10 @@
-import swal from "sweetalert2"
+import Swal from "sweetalert2"
+
 
 export default class NotificationService {
 
   static toast(text = "", title = "Logged Out", timer = 5500) {
-    swal.fire({
+    Swal.fire({
       title,
       text,
       type: "success",
@@ -19,7 +20,7 @@ export default class NotificationService {
       error.message = error.response.data
     }
 
-    swal.fire({
+    Swal.fire({
       title: "A Notification",
       text: error.message,
       type: "error",
@@ -30,23 +31,46 @@ export default class NotificationService {
     });
   }
 
+
+
   static delete() {
-    swal.fire({
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-dark',
+        cancelButton: 'btn btn-dark'
+      },
+      buttonsStyling: false
+
+    })
+    Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      showCloseButton: true,
+      confirmButtonColor: 'black',
+      cancelButtonColor: 'grey',
+      confirmButtonText: 'Delete!'
     }).then((result) => {
       if (result.value) {
-        swal.fire(
+        Swal.fire(
           'Deleted!',
           'Your file has been deleted.',
           'success'
         )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled!',
+          'Delete Cancelled',
+          'error'
+        )
       }
     })
   }
+
+
 }
